@@ -1,0 +1,24 @@
+#include <iostream>
+#include "health.hpp"
+using namespace std;
+int main() {
+    CHealth VIP(65),VIP2(80),*mario,*mickey;
+    // need for CHealth() to be public
+    mario = new CHealth(70);
+    mickey = new CHealth(85);
+
+    cout << "  " << VIP.age << "  " << mario->age << endl;
+    cout << "  " << VIP2.age << "  " << mickey->age << endl;
+    VIP.measureCel();
+    mario->measureCel();
+    
+    VIP2.setAge(50);
+    mickey->setAge(45);
+    
+    cout << "  " << VIP2.age << "  " << mickey->age << endl;
+
+    cout << "  " << VIP.cel << "C  " << mario->faren << "F \n";
+    cout << "  size " << sizeof(CHealth) << "\n";
+    getchar();
+    return 1;
+}
