@@ -1,0 +1,33 @@
+#include "health.hpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    CHealth a1;
+    CHealth a2(25);
+
+    a1.measure();
+    a2.measure(5);
+
+    a1.cel2faren();
+    a1.GetHealthAge();
+    a1.GetBMI();
+
+    cout << "Health 1:" << endl;
+    cout << "Height: " << a1.height << endl;
+    cout << "Faren: " << a1.faren << endl;
+    cout << "Health Age: " << a1.healthAge << endl;
+    cout << "BMI: " << a1.BMIvalue << endl;
+
+    a2.cel2faren();
+    a2.GetHealthAge();
+    a2.GetBMI();
+
+    cout << "Health 2:" << endl;
+    cout << "Height: " << a2.height << endl;
+    cout << "Faren: " << a2.faren << endl;
+    cout << "Health Age: " << a2.healthAge << endl;
+    cout << "BMI: " << a2.BMIvalue << endl;
+
+    return 0;
+}
