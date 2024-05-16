@@ -6,8 +6,8 @@ int main() {
     CHealth a1;
     CHealth a2(25);
 
-    health1.measure();
-    health2.measure(5);
+    a1.measure();
+    a2.measure(5);
 
     a1.cel2faren();
     a1.GetHealthAge();
