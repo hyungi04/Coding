@@ -10,14 +10,15 @@ public:
     float height, cel, faren, beat, pressure;
     float BMIvalue, healthAge;
     float *beat5min, *temp5min;
-
     void measure();
     void measure(int);
     int run5min();
+
     void cel2faren();
-    void faren2cel();
     void GetHealthAge();
+    void faren2cel();
     void GetBMI();
+
 private:
     int age;
     float weight;
