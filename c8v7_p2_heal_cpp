@@ -1,0 +1,45 @@
+#include "health.hpp"
+
+int CHealth::nCHealth = 0;
+
+CHealth::CHealth() {
+    nCHealth++;
+    age = 20;
+    beat5min = temp5min = nullptr;
+}
+
+CHealth::CHealth(int a) {
+    nCHealth++;
+    age = a;
+    beat5min = temp5min = nullptr;
+}
+
+CHealth::~CHealth() {
+    delete[] beat5min;
+    delete[] temp5min;
+}
+
+void CHealth::measure() {
+}
+
+void CHealth::measure(int value) {
+}
+
+int CHealth::run5min() {
+    return 0;
+}
+
+void CHealth::cel2faren() {
+    faren = cel * 9.0 / 5.0 + 32.0;
+}
+
+void CHealth::faren2cel() {
+    cel = (faren - 32.0) * 5.0 / 9.0;
+}
+
+void CHealth::GetHealthAge() {
+    healthAge = beat / pressure;
+}
+
+void CHealth::GetBMI() {
+}
