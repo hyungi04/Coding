@@ -1,28 +1,41 @@
 #include "health.hpp"
+#include <iostream>
 
 int CHealth::nCHealth = 0;
 
-CHealth::CHealth() {
+CHealth::CHealth() : age(20), beat5min(nullptr), temp5min(nullptr) {
     nCHealth++;
-    age = 20;
-    beat5min = temp5min = nullptr;
 }
 
-CHealth::CHealth(int a) {
+CHealth::CHealth(int a) : age(a), beat5min(nullptr), temp5min(nullptr) {
     nCHealth++;
-    age = a;
-    beat5min = temp5min = nullptr;
 }
 
 CHealth::~CHealth() {
-    delete[] beat5min;
-    delete[] temp5min;
+    if (beat5min != nullptr) {
+        delete[] beat5min;
+    }
+    if (temp5min != nullptr) {
+        delete[] temp5min;
+    }
+    nCHealth--;
 }
 
+// Member functions
 void CHealth::measure() {
+    height = 160.0f;
+    cel = 35.0f;
+    beat = 70.0f;
+    pressure = 110.0f;
+    weight = 70.0f;
 }
 
 void CHealth::measure(int value) {
+    height = 160.0f + value;
+    cel = 35.0f;
+    beat = 70.0f + value;
+    pressure = 110.0f;
+    weight = 70.0f + value;
 }
 
 int CHealth::run5min() {
@@ -30,11 +43,11 @@ int CHealth::run5min() {
 }
 
 void CHealth::cel2faren() {
-    faren = cel * 9.0 / 5.0 + 32.0;
+    faren = cel * 9.0f / 5.0f + 32.0f;
 }
 
 void CHealth::faren2cel() {
-    cel = (faren - 32.0) * 5.0 / 9.0;
+    cel = (faren - 32.0f) * 5.0f / 9.0f;
 }
 
 void CHealth::GetHealthAge() {
@@ -42,4 +55,5 @@ void CHealth::GetHealthAge() {
 }
 
 void CHealth::GetBMI() {
+    BMIvalue = weight / ((height / 100.0f) * (height / 100.0f));
 }
