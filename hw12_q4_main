@@ -1,0 +1,17 @@
+#include <iostream>
+#include "ani.hpp"
+#include "human.hpp"
+#include "bird.hpp"
+#include "fish.hpp"
+using namespace std;
+int main() {
+    animal *a[3];
+    for(int i=0;i<2;i++) a[i] = new fish;
+    fish c;
+    a[2] = &c;
+    c.swim();
+    for(int i=0;i<2;i++){
+      ((fish *)a[i])->swim();
+    }
+    return 123;
+}
