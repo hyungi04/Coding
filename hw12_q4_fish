@@ -1,0 +1,9 @@
+#pragma once
+#include "ani.hpp"
+using namespace std;
+class fish : public animal {
+public:
+    fish() : nfins(1) { };
+    int nfins;
+    void swim() { cout << " I swim \n"; }
+};
