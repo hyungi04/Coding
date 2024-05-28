@@ -1,0 +1,96 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h> // for sleep function
+
+class FIFOQueue {
+public:
+    FIFOQueue(int size) : maxSize(size) {}
+
+    void enqueue(int packet) {
+        if (queue.size() < maxSize) {
+            queue.push_back(packet);
+        } else {
+            overflowCount++;
+        }
+    }
+
+    void dequeue() {
+        if (!queue.empty()) {
+            queue.erase(queue.begin());
+        } else {
+            underflowCount++;
+        }
+    }
+
+    int size() const {
+        return queue.size();
+    }
+
+    int getOverflowCount() const {
+        return overflowCount;
+    }
+
+    int getUnderflowCount() const {
+        return underflowCount;
+    }
+
+    double getAverageFullness(int simulationTime) const {
+        return static_cast<double>(totalQueueSize) / simulationTime;
+    }
+
+    void incrementTotalQueueSize() {
+        totalQueueSize += queue.size();
+    }
+
+private:
+    std::vector<int> queue;
+    int maxSize;
+    int overflowCount = 0;
+    int underflowCount = 0;
+    int totalQueueSize = 0;
+};
+
+int main() {
+    srand(time(0));
+    const int simulationTime = 120; // 2 minutes
+    const int capacity = 100; // fixed queue size
+    std::vector<std::pair<int, int>> scenarios = {{10, 15}, {15, 10}, {20, 15}, {15, 20}}; // (NI, NO) pairs
+
+    std::ofstream outFile("queue_data.txt");
+    outFile << "NI NO MaxQueueSize AvgQueueSize OverflowCount\n";
+
+    for (auto scenario : scenarios) {
+        int NI = scenario.first;
+        int NO = scenario.second;
+        FIFOQueue queue(capacity);
+
+        for (int t = 0; t < simulationTime; ++t) {
+            int ni = rand() % NI;
+            int no = rand() % NO;
+
+            for (int i = 0; i < ni; ++i) {
+                queue.enqueue(1); // enqueue one packet
+            }
+
+            for (int i = 0; i < no; ++i) {
+                queue.dequeue();
+            }
+
+            queue.incrementTotalQueueSize();
+            sleep(1); // sleep for 1 second
+        }
+
+        int maxQueueSize = queue.size();
+        double avgQueueSize = queue.getAverageFullness(simulationTime);
+        int overflowCount = queue.getOverflowCount();
+
+        outFile << NI << " " << NO << " " << maxQueueSize << " " << avgQueueSize << " " << overflowCount << "\n";
+        std::cout << "NI: " << NI << ", NO: " << NO << ", Max Queue Size: " << maxQueueSize << ", Avg Queue Size: " << avgQueueSize << ", Overflow Count: " << overflowCount << std::endl;
+    }
+
+    outFile.close();
+    return 0;
+}
