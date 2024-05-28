@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h> // for sleep function
+
+class Queue {
+public:
+    Queue(int ni, int no, int capacity) : NI(ni), NO(no), maxSize(capacity) {}
+
+    void enqueue(int packet) {
+        if(queue.size() < maxSize) {
+            queue.push_back(packet);
+        } else {
+            overflowCount++;
+        }
+    }
+
+    void dequeue() {
+        if(!queue.empty()) {
+            queue.erase(queue.begin());
+        } else {
+            underflowCount++;
+        }
+    }
+
+    int size() const {
+        return queue.size();
+    }
+
+    int getOverflowCount() const {
+        return overflowCount;
+    }
+
+    int getUnderflowCount() const {
+        return underflowCount;
+    }
+
+    double getAverageFullness(int simulationTime) const {
+        return static_cast<double>(totalQueueSize) / simulationTime;
+    }
+
+    void incrementTotalQueueSize() {
+        totalQueueSize += queue.size();
+    }
+
+private:
+    std::vector<int> queue;
+    int NI;
+    int NO;
+    int maxSize;
+    int overflowCount = 0;
+    int underflowCount = 0;
+    int totalQueueSize = 0;
+};
