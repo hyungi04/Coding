@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h> // for sleep function
+
+class FIFOQueue {
+public:
+    FIFOQueue(int size) : maxSize(size) {}
+
+    void enqueue(int packet) {
+        if (queue.size() < maxSize) {
+            queue.push_back(packet);
+        } else {
+            overflowCount++;
+        }
+    }
+
+    void dequeue() {
+        if (!queue.empty()) {
+            queue.erase(queue.begin());
+        } else {
+            underflowCount++;
+        }
+    }
+
+    int size() const {
+        return queue.size();
+    }
+
+    int getOverflowCount() const {
+        return overflowCount;
+    }
+
+    int getUnderflowCount() const {
+        return underflowCount;
+    }
+
+private:
+    std::vector<int> queue;
+    int maxSize;
+    int overflowCount = 0;
+    int underflowCount = 0;
+};
+
+int main() {
+    srand(time(0));
+    const int simulationTime = 120; // 2 minutes
+    const int capacity = 100; // example queue size
+    const int NI = 10;
+    const int NO = 15;
+
+    FIFOQueue queue(capacity);
+
+    for (int t = 0; t < simulationTime; ++t) {
+        int ni = rand() % NI;
+        int no = rand() % NO;
+
+        for (int i = 0; i < ni; ++i) {
+            queue.enqueue(1); // enqueue one packet
+        }
+
+        for (int i = 0; i < no; ++i) {
+            queue.dequeue();
+        }
+
+        std::cout << "Time " << t << ": Queue size = " << queue.size() << std::endl;
+        sleep(1); // sleep for 1 second
+    }
+
+    return 0;
+}
