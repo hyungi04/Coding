@@ -1,0 +1,22 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+int main() {
+    srand(time(0));
+    std::vector<int> vec;
+    // Insert 10 random values
+    for (int i = 0; i < 10; ++i) {
+        int randomValue = rand() % 100;
+        vec.push_back(randomValue);
+        std::cout << "Inserted: " << randomValue << std::endl;
+    }
+    // Remove and print the values
+    while (!vec.empty()) {
+        std::cout << "Removed: " << vec.back() << std::endl;
+        vec.pop_back();
+    }
+    return 0;
+}
+
