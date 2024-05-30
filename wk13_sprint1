@@ -1,14 +1,17 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <unistd.h> // for sleep function
+#include <unistd.h> 
 
 int main() {
-    srand(time(0)); // seed for random number generation
-    for (int i = 0; i < 120; ++i) { // run for 2 minutes
-        int randomValue = rand() % 100; // random value between 0 and 99
-        std::cout << "Random value: " << randomValue << std::endl;
-        sleep(1); // sleep for 1 second
+    int elapsedSeconds = 0, x, T = 1;
+    std::cout << "RANDMAX " << RAND_MAX << std::endl;  
+    srand(time(0)); 
+    while (elapsedSeconds < 120) {
+        sleep(T); 
+        x = rand() % 100; // Generate random value between 0 and 99
+        elapsedSeconds += T;
+        std::cout << "Elapsed time[sec] = " << elapsedSeconds << "   " << x << std::endl;
     }
-    return 0;
+    return 123;
 }
